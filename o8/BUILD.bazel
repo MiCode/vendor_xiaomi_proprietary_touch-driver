@@ -1,0 +1,24 @@
+package(
+    default_visibility = [
+        "//visibility:public",
+    ],
+)
+
+load("//build/kernel/kleaf:kernel.bzl", "ddk_headers")
+load(":define_modules.bzl", "define_modules")
+
+define_modules("bixi", "consolidate")
+define_modules("bixi", "perf")
+
+ddk_headers(
+    name = "xiaomi_touch_kernel_headers",
+    hdrs = glob([
+        "xiaomi/xiaomi_touch*.h"
+    ]),
+    includes = [
+        "xiaomi",
+    ],
+)
+
+print("xiaomi_touch_kernel_headers")
+

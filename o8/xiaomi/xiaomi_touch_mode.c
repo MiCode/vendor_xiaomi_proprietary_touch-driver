@@ -1,0 +1,1 @@
+../../xiaomi/xiaomi_touch_mode.c

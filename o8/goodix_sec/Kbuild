@@ -1,0 +1,42 @@
+ifeq (true, $(strip $(call is-factory-build)))
+KBUILD_CPPFLAGS += -DCONFIG_TOUCH_FACTORY_BUILD
+ifeq (userdebug, $(TARGET_BUILD_VARIANT))
+KBUILD_CPPFLAGS += -DCONFIG_TOUCH_FACTORY_BUILD
+endif
+endif
+
+KBUILD_CPPFLAGS += -DCONFIG_TOUCHSCREEN_GOODIX_BRL_SPI
+
+LINUX_INC +=	-Iinclude/linux \
+		-Iinclude/linux/drm
+
+KBUILD_CPPFLAGS += $(CDEFINES)
+
+ccflags-y += $(LINUX_INC)
+
+ifeq ($(call cc-option-yn, -Wmaybe-uninitialized),y)
+EXTRA_CFLAGS += -Wmaybe-uninitialized
+endif
+
+ifeq ($(call cc-option-yn, -Wheader-guard),y)
+EXTRA_CFLAGS += -Wheader-guard
+endif
+
+DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+ccflags-y += -I$(DIR)
+
+goodix_core-m += \
+	goodix_brl_i2c.o \
+	goodix_brl_spi.o \
+	goodix_ts_core.o \
+	goodix_brl_hw.o \
+	goodix_cfg_bin.o \
+	goodix_ts_utils.o \
+	goodix_brl_fwupdate.o \
+	goodix_ts_gesture.o \
+	goodix_ts_inspect.o \
+	goodix_ts_tools.o
+goodix_core-m += goodix_xiaomi_driver.o
+obj-m += goodix_core.o
+
+

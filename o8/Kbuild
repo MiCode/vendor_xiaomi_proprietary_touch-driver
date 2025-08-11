@@ -1,0 +1,14 @@
+ifeq (1, $(strip $(CONFIG_TOUCH_FACTORY_SELECT)))
+KBUILD_CPPFLAGS += -DCONFIG_TOUCH_FACTORY_BUILD=1
+ifeq (userdebug, $(TARGET_BUILD_VARIANT))
+KBUILD_CPPFLAGS += -DTESTING_RESULT_IN_CSV=1
+endif
+endif
+
+ifeq (1, $(strip $(CONFIG_FLIP_STATE)))
+KBUILD_CPPFLAGS += -DFLIP_STATE
+endif
+
+obj-m += ../xiaomi/
+obj-m += syna_tcm2_pri/
+obj-m += goodix_sec/

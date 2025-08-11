@@ -1,0 +1,1 @@
+../../xiaomi/xiaomi_touch_proc.c

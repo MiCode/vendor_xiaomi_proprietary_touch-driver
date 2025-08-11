@@ -1,0 +1,51 @@
+ifeq (true, $(strip $(call is-factory-build)))
+KBUILD_CPPFLAGS += -DTOUCH_FACTORY_SELECT
+ifeq (userdebug, $(TARGET_BUILD_VARIANT))
+KBUILD_CPPFLAGS += -DTESTING_RESULT_IN_CSV
+endif
+endif
+CDEFINES += -DTOUCH_SYNA_BOOTLOADER_RECOVERY
+
+LINUX_INC +=	-Iinclude/linux \
+		-Iinclude/linux/drm
+
+CDEFINES += -Wall\
+	-Werror\
+	-D__linux__\
+	-DCONFIG_TOUCHSCREEN_SYNA_TCM2_REFLASH\
+	-DCONFIG_TOUCHSCREEN_SYNA_TCM2_SYSFS\
+	-DCONFIG_TOUCHSCREEN_SYNA_TCM2_TESTING
+
+KBUILD_CPPFLAGS += $(CDEFINES)
+
+ccflags-y += $(LINUX_INC)
+
+ifeq ($(call cc-option-yn, -Wmaybe-uninitialized),y)
+EXTRA_CFLAGS += -Wmaybe-uninitialized
+endif
+
+ifeq ($(call cc-option-yn, -Wheader-guard),y)
+EXTRA_CFLAGS += -Wheader-guard
+endif
+
+DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+TCM_CORE=tcm/
+ccflags-y += -I$(DIR)
+ccflags-y += -I$(DIR)$(TCM_CORE)
+synaptics_tcm2-m := syna_tcm2.o
+synaptics_tcm2-m += syna_tcm2_cdev.o
+synaptics_tcm2-m += \
+	$(TCM_CORE)synaptics_touchcom_core_v1.o \
+	$(TCM_CORE)synaptics_touchcom_core_v2.o \
+ 	$(TCM_CORE)synaptics_touchcom_func_base.o \
+ 	$(TCM_CORE)synaptics_touchcom_func_touch.o
+synaptics_tcm2-m += $(TCM_CORE)synaptics_touchcom_func_reflash.o
+synaptics_tcm2-m += $(TCM_CORE)synaptics_touchcom_func_romboot.o
+synaptics_tcm2-m += syna_tcm2_platform_spi.o
+synaptics_tcm2-m += syna_tcm2_sysfs.o
+synaptics_tcm2-m += syna_tcm2_testing.o
+synaptics_tcm2-m += syna_xiaomi_driver.o
+
+obj-m += synaptics_tcm2.o
+
+
