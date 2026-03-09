@@ -1,0 +1,9 @@
+config CONFIG_TOUCHSCREEN_FOCALTECH_3383
+	tristate "focaltech tianma spi touchscreen"
+	default n
+	help
+	  Say Y here if you have a focaltech series touch controller
+	  to your system.
+	  If build module, say M.
+	  If unsure, say N.
+

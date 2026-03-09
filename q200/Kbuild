@@ -1,0 +1,33 @@
+include $(TOUCH_ROOT)/config/xiaomi_touch.conf
+LINUXINCLUDE += -include $(TOUCH_ROOT)/config/xiaomi_touch.h
+
+ifeq (1, $(strip $(CONFIG_TOUCH_FACTORY_SELECT)))
+LINUXINCLUDE += -include $(TOUCH_ROOT)/config/xiaomi_touch_factory.h
+endif
+
+ifeq (1, $(strip $(CONFIG_TOUCH_THP_SUPPORT)))
+KBUILD_CPPFLAGS += -DTOUCH_THP_SUPPORT
+endif
+
+ifeq (1, $(strip $(CONFIG_TOUCH_FOD_SUPPORT)))
+KBUILD_CPPFLAGS += -DTOUCH_FOD_SUPPORT
+endif
+
+ifeq (1, $(strip $(CONFIG_CMD_DATA_BUF_SIZE)))
+KBUILD_CPPFLAGS += -DCMD_DATA_BUF_SIZE=256
+endif
+
+ifeq (1, $(strip $(CONFIG_TOUCH_KNOCK_SUPPORT)))
+KBUILD_CPPFLAGS += -DTOUCH_KNOCK_SUPPORT
+endif
+
+ifeq (1, $(strip $(CONFIG_TRUSTED_TOUCH_SUPPORT)))
+KBUILD_CPPFLAGS += -DTOUCH_TRUSTED_SUPPORT
+endif
+
+ifeq (1, $(strip $(CONFIG_THP_V4_ENABLE)))
+KBUILD_CPPFLAGS += -DTHP_V4_ENABLE
+endif
+
+obj-m += ../xiaomi/
+obj-m += focaltech_3383/

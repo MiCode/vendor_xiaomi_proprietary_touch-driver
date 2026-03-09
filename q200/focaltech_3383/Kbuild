@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+KDIR := $(TOP)/kernel_platform/common
+
+
+LINUX_INC +=	-Iinclude/linux \
+		-Iinclude/linux/drm
+
+LINUX_INC +=	-I$(TOUCHFEATURE_ROOT) \
+
+CDEFINES +=	-Wall\
+	-Werror\
+	-D__linux__
+
+KBUILD_CPPFLAGS += $(CDEFINES)
+
+ccflags-y += $(LINUX_INC)
+
+ifeq (userdebug, $(TARGET_BUILD_VARIANT))
+KBUILD_CPPFLAGS += -DUSER_DEBUG_BUILD
+endif
+
+ifeq ($(call cc-option-yn, -Wmaybe-uninitialized),y)
+EXTRA_CFLAGS += -Wmaybe-uninitialized
+endif
+
+#KBUILD_EXTRA_SYMBOLS +=$(OUT)/obj/vendor/qcom/opensource/display-drivers/msm/Module.symvers
+# ported from Android.mk
+$(info within KBUILD file KBUILD_EXTRA_SYMBOLS = $(KBUILD_EXTRA_SYMBOLS))
+
+ifeq ($(call cc-option-yn, -Wheader-guard),y)
+EXTRA_CFLAGS += -Wheader-guard
+endif
+
+
+#LINUXINCLUDE += -I$(MMRM_ROOT)/driver/src
+
+obj-m := focaltech_touch.o
+focaltech_touch-y := \
+	focaltech_core.o \
+	focaltech_ex_fun.o \
+	focaltech_ex_mode.o \
+	focaltech_gesture.o \
+	focaltech_esdcheck.o \
+	focaltech_point_report_check.o \
+	focaltech_test/focaltech_test.o \
+	focaltech_test/focaltech_test_ini.o \
+	focaltech_test/supported_ic/focaltech_test_ft3383g.o \
+	focaltech_flash/focaltech_upgrade_ft3383g.o \
+	focaltech_flash.o \
+	focaltech_spi.o
+
+
+
+CDEFINES += -DBUILD_TIMESTAMP=\"$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')\"
+

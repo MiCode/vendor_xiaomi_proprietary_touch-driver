@@ -1,0 +1,4 @@
+config TRUSTED_TOUCH
+        tristate "Short description of export TRUSTED_TOUCH"
+        help
+          Long description of export TRUSTED_TOUCH

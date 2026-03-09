@@ -1,0 +1,74 @@
+load("//build/kernel/kleaf:kernel.bzl", "ddk_headers")
+
+package(
+    default_visibility = [
+        "//visibility:public"],
+)
+
+ddk_headers(
+    name = "p2_headers",
+    hdrs = glob([
+            "p2/*.h",
+            "p2/qts/*.h",
+            "p2/tcm/*.h"
+        ]
+    ),
+    includes = [
+        "p2",
+        "p2/qts",
+        "p2/tcm"
+    ]
+)
+
+ddk_headers(
+    name = "p2_goodix_headers",
+    hdrs = glob([
+            "p2/goodix/*.h",
+            "p2/goodix/**/*.h",
+            "p2/goodix/**/*.i",
+        ]
+    ),
+    includes = [
+        "p2/goodix",
+    ]
+)
+ddk_headers(
+    name = "q200_focal_headers",
+    hdrs = glob([
+            "q200/focaltech_3383/*.h",
+            "q200/focaltech_3383/**/*.h",
+            "q200/focaltech_3383/**/*.i",
+        ]
+    ),
+    includes = [
+        "q200/focaltech_3383",
+    ]
+)
+
+ddk_headers(
+    name = "xiaomi_touch_headers",
+    hdrs = glob([
+            "xiaomi/*.h"
+        ]
+    ),
+    includes = [
+        "xiaomi"
+    ]
+)
+
+ddk_headers(
+    name = "touch_drivers_headers",
+    hdrs = ["p2_goodix_headers", ":q200_focal_headers", ":p2_headers", ":xiaomi_touch_headers"]
+)
+
+print("touch_drivers_headers")
+
+config_setting(
+    name = "factory_build_v1",
+        values = {
+        "define": "FACTORY_BUILD=1",
+    },
+)
+
+load(":target.bzl", "define_touch_target")
+define_touch_target()
