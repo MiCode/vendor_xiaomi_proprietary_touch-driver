@@ -1,0 +1,41 @@
+TOUCH_PRODUCT:=warsaw
+
+$(info wqk TOUCH_ROOT = $(TOUCH_ROOT))
+include $(TOUCH_ROOT)/config/xiaomi_touch.conf
+LINUXINCLUDE += -include $(TOUCH_ROOT)/config/xiaomi_touch.h
+
+ifeq (1, $(strip $(CONFIG_TOUCH_FACTORY_SELECT)))
+LINUXINCLUDE += -include $(TOUCH_ROOT)/config/xiaomi_touch_factory.h
+KBUILD_CPPFLAGS += -DCONFIG_TOUCH_FACTORY_BUILD
+endif
+
+ifeq (1, $(strip $(CONFIG_TRUSTED_TOUCH)))
+KBUILD_CPPFLAGS += -DCONFIG_TRUSTED_TOUCH
+endif
+
+ifeq (1, $(strip $(CONFIG_TOUCH_THP_SUPPORT)))
+KBUILD_CPPFLAGS += -DTOUCH_THP_SUPPORT
+endif
+
+ifeq (1, $(strip $(CONFIG_TOUCH_FOD_SUPPORT)))
+KBUILD_CPPFLAGS += -DTOUCH_FOD_SUPPORT
+endif
+
+ifeq (1, $(strip $(CONFIG_TOUCH_KNOCK_SUPPORT)))
+KBUILD_CPPFLAGS += -DTOUCH_KNOCK_SUPPORT
+endif
+
+#ifeq (1, $(strip $(CONFIG_TRUSTED_TOUCH_SUPPORT)))
+#KBUILD_CPPFLAGS += -DTOUCH_TRUSTED_SUPPORT
+#endif
+
+ifeq (1, $(strip $(CONFIG_THP_V4_ENABLE)))
+KBUILD_CPPFLAGS += -DTHP_V4_ENABLE
+endif
+
+ifeq (1, $(strip $(CONFIG_TOUCH_SPI_CS_CLK_DELAY)))
+KBUILD_CPPFLAGS += -DTOUCH_SPI_CS_CLK_DELAY
+endif
+
+obj-m += xiaomi/
+obj-m += goodix_9916k/
