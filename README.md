@@ -6,3 +6,4 @@
 | popsicle-w-oss | Xiaomi 17 / Xiaomi 17 Pro / Xiaomi 17 Pro Max | Android W | release-w-qcom-sm8850 |[popsicle-w-oss](https://github.com/MiCode/vendor_xiaomi_proprietary_touch-driver/tree/popsicle-w-oss) |
 | yupei-w-oss | Xiaomi Pad 8 | Android W | LA.VENDOR.15.4.0.r1-15000-r1.0.r1_00044.1 |[yupei-w-oss](https://github.com/MiCode/vendor_xiaomi_proprietary_touch-driver/tree/yupei-w-oss) |
 | piano-w-oss | Xiaomi Pad 8 Pro | Android W | LA.VENDOR.15.4.0.r1-15000-r1.0.r1_00044.1 |[piano-w-oss](https://github.com/MiCode/vendor_xiaomi_proprietary_touch-driver/tree/piano-w-oss) |
+| warsaw-w-oss | REDMI K90 Ultra | Android W | LA.VENDOR.15.4.0.r1-15000-r1.0.r1_00044.1 |[warsaw-w-oss](https://github.com/MiCode/vendor_xiaomi_proprietary_touch-driver/tree/warsaw-w-oss) |
